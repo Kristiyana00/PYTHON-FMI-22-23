@@ -1,0 +1,106 @@
+{% extends 'customer/base.html' %}
+
+{% block content %}
+<div class="container mb-5">
+    <div class="row justify-content-center mt-1">
+        <div class="col-md-5 col-sm-12 p-4 text-center">
+            <h1>Поръчката е направена успешно!</h1>
+            <p>Ще получите email за потвърждение.</p>
+            <a href="{% url 'index' %}">Начало</a>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5 col-sm-12 text-center">
+            <h3 class="pb-3">Крайна поръчка:</h3>
+            <!-- items.all pravi vsichko iterable -->
+            {% for item in items.all %}
+            <p>{{ item.name }} <span class="pl-3">{{ item.price }}</span></p>
+            {% endfor %}
+
+            <p class="font-weight-bold pt-4">Общо: {{ price }}</p>
+        </div>
+    </div>
+    <div class="row justify-content-center pb-2 pt-4">
+        <div class="col-md-6 text-center">
+            <h3>Плати сега или при доставка</h3>
+        </div>
+    </div>
+    <div class="row justify-content-center pb-2">
+        <div class="col-md-6 text-center">
+            <div id="paypal-button"></div>
+        </div>
+    </div>
+</div>
+
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    paypal.Button.render({
+        // Configure environment
+        env: 'sandbox',
+        client: {
+            sandbox: 'ASIc_gVtOUwr3H_B-izB2fvP9q4Vtr7d-bp2RO1VA_YSmDaTTA0z2wPTLBA2UZ6ahULYwu5mR2cMJP-n',
+            production: 'demo_production_client_id'
+        },
+        // Customize button (optional)
+        locale: 'en_US',
+        style: {
+            size: 'large',
+            color: 'blue',
+            shape: 'rect',
+        },
+
+        // Enable Pay Now checkout flow (optional)
+        commit: true,
+
+        // Set up a payment
+        payment: function (data, actions) {
+            return actions.payment.create({
+                transactions: [{
+                    amount: {
+                        total: '{{ price }}',
+                        currency: 'EUR'
+                    }
+                }]
+            });
+        },
+        // Execute the payment
+        onAuthorize: function (data, actions) {
+            return actions.payment.execute().then(function () {
+                // Show a confirmation message to the buyer
+                // Изпращаме съобщения обратно на бекенд-а, че поръчката е платена.
+                $.ajax({
+                    type: 'POST',
+                    url: "{% url 'order-confirmation' pk %}",
+                    beforeSend: function(request) {
+                        request.setRequestHeader('X-CSRFToken', csrftoken)
+                    },
+                    data: JSON.stringify({'isPaid': true}),
+                    success: function(data){
+                        window.location.href = '/payment-confirmation/'
+                    }
+                })
+            });
+        }
+    }, '#paypal-button');
+
+</script>
+
+{% endblock content %}

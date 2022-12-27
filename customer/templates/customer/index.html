@@ -1,0 +1,18 @@
+{% extends 'customer/base.html' %}
+
+{% block content %}
+<div class="container mb-5">
+    <div class="row justify-content-center mt-5">
+        <!--md-8 8 width na medium devices, sm-12 12 width na small devices-->
+        <div class="col-md-8 col-sm-12 offset-md-1 p-4 text-center">
+            <h1>Онлайн доставка по домовете</h1>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-1">
+        <div class="card col-md-5 col-sm-12 offset-md-1 p-4 text-center">
+            <h2>Направи своята поръчка</h2>
+            <a href="{% url 'order' %}" style="border-color: orange !important" class="btn btn-outline-dark">Поръчай сега!</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

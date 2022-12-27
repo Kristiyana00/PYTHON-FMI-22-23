@@ -1,0 +1,248 @@
+{% extends 'customer/base.html' %}
+
+{% block content %}
+<div class="container mb-5">
+    <div class="row justify-content-center mt-1">
+        <div class="col-md-12 col-sm-12 p-4">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="pt-5">
+                    <h1>Салати</h1>
+                    {% for salad in salads %}
+                    <div class="row mt-4">
+                        <div class="col-md-2 col-sm-12">
+                            <img class="rounded" src="{{ salad.image.url }}" width="150" height="100" />
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <div class="d-flex flex-row">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" name="items[]" class="form-check-input ml-0" value="{{ salad.pk }}">
+                                    <label class="form-check-label ml-4">{{ salad.name }}</label>
+                                </div>
+                                <p class="font-weight-bold pl-5 ml-auto">{{ salad.price }}</p>
+                            </div>
+                            <p class="ml-3">{{ salad.description }}</p>
+                        </div>
+                    </div>
+                    <hr />
+                    {% endfor %}
+                </div>
+                <div class="pt-5">
+                    <h1>Предястия</h1>
+                    {% for appetizer in appetizers %}
+                    <div class="row mt-4">
+                        <div class="col-md-2 col-sm-12">
+                            <img class="rounded" src="{{ appetizer.image.url }}" width="150" height="100" />
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <div class="d-flex flex-row">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" name="items[]" class="form-check-input ml-0"
+                                        value="{{ appetizer.pk }}">
+                                    <label class="form-check-label ml-4">{{ appetizer.name }}</label>
+                                </div>
+                                <p class="font-weight-bold pl-5 ml-auto">{{ appetizer.price }}</p>
+                            </div>
+                            <p class="ml-3">{{ appetizer.description }}</p>
+                        </div>
+                    </div>
+                    <hr />
+                    {% endfor %}
+                </div>
+                <div class="pt-5">
+                    <h1>Паста и ризото</h1>
+                    {% for ital in italian %}
+                    <div class="row mt-4">
+                        <div class="col-md-2 col-sm-12">
+                            <img class="rounded" src="{{ ital.image.url }}" width="150" height="100" />
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <div class="d-flex flex-row">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" name="items[]" class="form-check-input ml-0"
+                                        value="{{ ital.pk }}">
+                                    <label class="form-check-label ml-4">{{ ital.name }}</label>
+                                </div>
+                                <p class="font-weight-bold pl-5 ml-auto">{{ ital.price }}</p>
+                            </div>
+                            <p class="ml-3">{{ ital.description }}</p>
+                        </div>
+                    </div>
+                    <hr />
+                    {% endfor %}
+                </div>
+                <div class="pt-5">
+                    <h1>Основни ястия</h1>
+                    {% for main_dish in main_dishes %}
+                    <div class="row mt-4">
+                        <div class="col-md-2 col-sm-12">
+                            <img class="rounded" src="{{ main_dish.image.url }}" width="150" height="100" />
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <div class="d-flex flex-row">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" name="items[]" class="form-check-input ml-0"
+                                        value="{{ main_dish.pk }}">
+                                    <label class="form-check-label ml-4">{{ main_dish.name }}</label>
+                                </div>
+                                <p class="font-weight-bold pl-5 ml-auto">{{ main_dish.price }}</p>
+                            </div>
+                            <p class="ml-3">{{ main_dish.description }}</p>
+                        </div>
+                    </div>
+                    <hr />
+                    {% endfor %}
+                </div>
+                <div class="pt-5">
+                    <h1>Морски дарове</h1>
+                    {% for sf in seafood %}
+                    <div class="row mt-4">
+                        <div class="col-md-2 col-sm-12">
+                            <img class="rounded" src="{{ sf.image.url }}" width="150" height="100" />
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <div class="d-flex flex-row">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" name="items[]" class="form-check-input ml-0"
+                                        value="{{ sf.pk }}">
+                                    <label class="form-check-label ml-4">{{ sf.name }}</label>
+                                </div>
+                                <p class="font-weight-bold pl-5 ml-auto">{{ sf.price }}</p>
+                            </div>
+                            <p class="ml-3">{{ sf.description }}</p>
+                        </div>
+                    </div>
+                    <hr />
+                    {% endfor %}
+                </div>
+                <div class="pt-5">
+                    <h1>Пици</h1>
+                    {% for pizza in pizzas %}
+                    <div class="row mt-4">
+                        <div class="col-md-2 col-sm-12">
+                            <img class="rounded" src="{{ pizza.image.url }}" width="150" height="100" />
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <div class="d-flex flex-row">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" name="items[]" class="form-check-input ml-0"
+                                        value="{{ pizza.pk }}">
+                                    <label class="form-check-label ml-4">{{ pizza.name }}</label>
+                                </div>
+                                <p class="font-weight-bold pl-5 ml-auto">{{ pizza.price }}</p>
+                            </div>
+                            <p class="ml-3">{{ pizza.description }}</p>
+                        </div>
+                    </div>
+                    <hr />
+                    {% endfor %}
+                </div>
+                <div class="pt-5">
+                    <h1>Суши</h1>
+                    {% for sh in sushi %}
+                    <div class="row mt-4">
+                        <div class="col-md-2 col-sm-12">
+                            <img class="rounded" src="{{ sh.image.url }}" width="150" height="100" />
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <div class="d-flex flex-row">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" name="items[]" class="form-check-input ml-0"
+                                        value="{{ sh.pk }}">
+                                    <label class="form-check-label ml-4">{{ sh.name }}</label>
+                                </div>
+                                <p class="font-weight-bold pl-5 ml-auto">{{ sh.price }}</p>
+                            </div>
+                            <p class="ml-3">{{ sh.description }}</p>
+                        </div>
+                    </div>
+                    <hr />
+                    {% endfor %}
+                </div>
+                <div class="pt-5">
+                    <h1>Десерти</h1>
+                    {% for desert in deserts %}
+                    <div class="row mt-4">
+                        <div class="col-md-2 col-sm-12">
+                            <img class="rounded" src="{{ desert.image.url }}" width="150" height="100" />
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <div class="d-flex flex-row">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" name="items[]" class="form-check-input ml-0"
+                                        value="{{ desert.pk }}">
+                                    <label class="form-check-label ml-4">{{ desert.name }}</label>
+                                </div>
+                                <p class="font-weight-bold pl-5 ml-auto">{{ desert.price }}</p>
+                            </div>
+                            <p class="ml-3">{{ desert.description }}</p>
+                        </div>
+                    </div>
+                    <hr />
+                    {% endfor %}
+                </div>
+                <div class="pt-5">
+                    <h1>Напитки</h1>
+                    {% for drink in drinks %}
+                    <div class="row mt-4">
+                        <div class="col-md-2 col-sm-12">
+                            <img class="rounded" src="{{ drink.image.url }}" width="150" height="100" />
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <div class="d-flex flex-row">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" name="items[]" class="form-check-input ml-0"
+                                        value="{{ drink.pk }}">
+                                    <label class="form-check-label ml-4">{{ drink.name }}</label>
+                                </div>
+                                <p class="font-weight-bold pl-5 ml-auto">{{ drink.price }}</p>
+                            </div>
+                            <p class="ml-3">{{ drink.description }}</p>
+                        </div>
+                    </div>
+                    <hr />
+                    {% endfor %}
+                </div>
+
+                <div class="form-group pt-3">
+                    <label for="name">Две имена</label>
+                    <input required class="form-control" type="text" placeholder="Име Фамилия" name="name" />
+                </div>
+
+                <div class="form-group pt-3">
+                    <label for="name">Email</label>
+                    <input required class="form-control" type="text" placeholder="example@gmail.com" name="email" />
+                </div>
+
+                <div class="form-group pt-3">
+                    <label for="name">Адрес</label>
+                    <input required class="form-control" type="text" placeholder="Адрес" name="street" />
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group pt-3">
+                            <label for="name">Град</label>
+                            <input required class="form-control" type="text" placeholder="Град" name="city" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group pt-3">
+                            <label for="name">Държава</label>
+                            <input required class="form-control" type="text" placeholder="Държава" name="country" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group pt-3">
+                            <label for="name">Пощенски код</label>
+                            <input required class="form-control" type="text" placeholder="1000" name="zip" />
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-dark mt-5">Поръчай сега!</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
