@@ -1,0 +1,123 @@
+{% extends 'restaurant/base.html' %}
+
+{% block content %}
+<!-- <h1 class="text-center mt-5 font-weight-bolder">Здравей, {{ current_user.first_name }} {{ current_user.last_name }}!</h1> -->
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="card col-md-5 mr-3">
+            <h4 class="text-center pt-2">Обща печалба за деня:</h4>
+            <h1 class="text-center" style="color: orange;">{{ total_revenue }}</h1>
+        </div>
+        <div class="card col-md-5 mr-3">
+            <h4 class="text-center pt-2">Общ брой поръчки за деня:</h4>
+            <h1 class="text-center" style="color: black;">{{ total_orders }}</h1>
+        </div>
+    </div>
+
+    <h2 class="text-center mt-5 font-weight-bolder">Текущи поръчки</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-12 mt-3">
+            <table class="table table-hover table-stripped" style="color: white; background-color: orange; text-align: center;">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Цена</th>
+                        <th scope="col">Име</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Адрес</th>
+                        <th scope="col">Град</th>
+                        <th scope="col">Държава</th>
+                        <th scope="col">Пощенски код</th>
+                        <th scope="col">Платена</th>
+                        <th scope="col">Изпратена</th>
+                        <th scope="col">Детайли</th>
+                    </tr>
+                </thead>
+                <tbody style="background-color: white; color: black">
+                    {% for order in unshipped_orders %}
+                    <tr>
+                        <th scope="row">{{ order.pk }}</th>
+                        <td>{{ order.price }}</td>
+                        <td>{{ order.name }}</td>
+                        <td>{{ order.email }}</td>
+                        <td>{{ order.street }}</td>
+                        <td>{{ order.city }}</td>
+                        <td>{{ order.country }}</td>
+                        <td>{{ order.zip_code }}</td>
+                        <td>
+                            {% if order.is_paid %}
+                            <i style="color: green;" class="fas fa-check"></i>
+                            {% else %}
+                            <i style="color: red;" class="fas fa-times"></i>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if order.is_shipped %}
+                            <i style="color: green;" class="fas fa-check"></i>
+                            {% else %}
+                            <i style="color: red;" class="fas fa-times"></i>
+                            {% endif %}
+                        </td>
+                        <td><a href="{% url 'order-details' order.pk %}"><i class="far fa-edit"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <h2 class="text-center mt-5 font-weight-bolder">Изпълнени поръчки</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-12 mt-3">
+            <table class="table table-hover table-stripped" style="color: white; background-color: orange; text-align: center;">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Цена</th>
+                        <th scope="col">Име</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Адрес</th>
+                        <th scope="col">Град</th>
+                        <th scope="col">Държава</th>
+                        <th scope="col">Пощенски код</th>
+                        <th scope="col">Платена</th>
+                        <th scope="col">Изпратена</th>
+                        <th scope="col">Детайли</th>
+                    </tr>
+                </thead>
+                <tbody style="background-color: white; color: black">
+                    {% for order in shipped_orders %}
+                    <tr>
+                        <th scope="row">{{ order.pk }}</th>
+                        <td>{{ order.price }}</td>
+                        <td>{{ order.name }}</td>
+                        <td>{{ order.email }}</td>
+                        <td>{{ order.street }}</td>
+                        <td>{{ order.city }}</td>
+                        <td>{{ order.country }}</td>
+                        <td>{{ order.zip_code }}</td>
+                        <td>
+                            {% if order.is_paid %}
+                            <i style="color: green;" class="fas fa-check"></i>
+                            {% else %}
+                            <i style="color: red;" class="fas fa-times"></i>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if order.is_shipped %}
+                            <i style="color: green;" class="fas fa-check"></i>
+                            {% else %}
+                            <i style="color: red;" class="fas fa-times"></i>
+                            {% endif %}
+                        </td>
+                        <td><a href="{% url 'order-details' order.pk %}"><i class="far fa-edit"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}
