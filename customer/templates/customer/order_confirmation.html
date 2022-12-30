@@ -75,8 +75,8 @@
             return actions.payment.create({
                 transactions: [{
                     amount: {
-                        total: '{{ price }}',
-                        currency: 'EUR'
+                        total: '{{ price }}', //Използваме крайната цена, която сме подали в контекста.
+                        currency: 'EUR' //Сменяме валутата на евро.
                     }
                 }]
             });

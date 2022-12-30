@@ -17,21 +17,29 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-from customer.views import Index, About, Order, OrderConfirmation, OrderPayConfirmation, Menu, MenuSearch
-from restaurant.views import Logout, Dashboard, OrderDetails
+from customer.views import Index, About, OrderMenu, OrderConfirmation,\
+                           OrderPayConfirmation, GeneralMenuView, GeneralMenuSearchView,\
+                           Restaurants, RestaurantSearch, CustomerRestaurantMenu,\
+                           RestaurantMenuSearch, ChooseRestaurantOrder
+from restaurant.views import Logout, Dashboard, OrderDetails, RestaurantMenu
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    #path('restaurant/', include('restaurant.urls')),
     path('', Index.as_view(), name='index'),
     path('about/', About.as_view(), name='about'),
-    path('menu/', Menu.as_view(), name='menu'),
-    path('menu/search/', MenuSearch.as_view(), name='menu-search'),
-    path('order/', Order.as_view(), name='order'),
+    path('general_menu/', GeneralMenuView.as_view(), name='general-menu'),
+    path('general_menu/search/', GeneralMenuSearchView.as_view(), name='general-menu-search'),
+    path('restaurants/', Restaurants.as_view(), name='restaurants-menu'),
+    path('restaurants/<int:pk>/menu/', CustomerRestaurantMenu.as_view(), name='restaurant-menu'),
+    path('restaurants/<int:pk>/menu/search/', RestaurantMenuSearch.as_view(), name='restaurant-menu-search'),
+    path('restaurants/search/', RestaurantSearch.as_view(), name='restaurants-search'),
+    path('restaurants/order/', ChooseRestaurantOrder.as_view(), name='choose-restaurant-order'),
+    path('restaurants/order/<int:pk>/order_menu/', OrderMenu.as_view(), name='order-menu'),
     path('order-confirmation/<int:pk>', OrderConfirmation.as_view(), name='order-confirmation'),
     path('payment-confirmation/', OrderPayConfirmation.as_view(), name='payment-confirmation'),
     path('accounts/logout/', Logout.as_view(), name='logout'),
     path('restaurant/dashboard/', Dashboard.as_view(), name='dashboard'),
     path('restaurant/orders/<int:pk>/', OrderDetails.as_view(), name='order-details'),
+    path('restaurant/menu/', RestaurantMenu.as_view(), name='restaurant-menu')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
