@@ -12,6 +12,16 @@
       <ul class="navbar-nav">
         <li class="nav-item pl-2 text-white">Здравей, {{ current_user.first_name }} {{ current_user.last_name }}!</li>
       </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'dashboard' %}">Табло</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'restaurant-menu' %}">Меню</a>
+        </li>
+      </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item"><a href="{% url 'logout' %}" style="color:white;">Изход</a></li>
       </ul>
