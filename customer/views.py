@@ -73,7 +73,8 @@ class OrderMenu(View):
         #render the template
         return render(request, 'customer/order_menu.html', context)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, pk, *args, **kwargs):
+        restaurant_id = Restaurant.objects.get(pk=pk).pk
         name = request.POST.get('name')
         email = request.POST.get('email')
         street = request.POST.get('street')
@@ -113,7 +114,8 @@ class OrderMenu(View):
             street=street,
             city=city,
             country=country,
-            zip_code=zip_code
+            zip_code=zip_code,
+            restaurant_id=restaurant_id
         )
         #Добавяме всички неща от кошницата към поръчката.
         order.items.add(*item_ids)

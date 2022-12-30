@@ -1,17 +1,40 @@
 {% extends 'customer/base.html' %}
-
+{% load static %}
 {% block content %}
 <div class="container mb-5">
-    <div class="row justify-content-center mt-3">
+    <!-- <div class="row justify-content-center mt-3">
         <div class="col-md-8 col-sm-12 offset-md-1 p-4 text-center">
             <h1>За нас</h1>
         </div>
+    </div> -->
+    <div class="row justify-content-center mt-3">
+        <div class="col-md-10 col-sm-12 offset-md-1 p-4 text-center">
+            <h1 class="fw-bold" style="color: orange">Поръчай храна за вкъщи в 3 лесни стъпки:</h1>
+        </div>
     </div>
-    <div class="row justify-content-center mt-1">
-        <div class="card col-md-10 col-sm-12 offset-md-1 p-4 text-center">
-            <p>Първи параграф</p>
-            <p>Втори параграф</p>
-            <p>Трети параграф</p>
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-4 col-sm-12 text-center">
+            <h2>Избери ресторант</h2>
+            <img class="mt-3" src="{% static 'restaurant-icon.png' %}" width="50" height="50" class="d-inline-block align-top" alt="" loading="lazy">
+            <p class="pt-3" style="color: grey;">Избери желания ресторант.</p>
+        </div>
+        <div class="col-md-4 col-sm-12 text-center">
+            <h2>Избери храна</h2>
+            <img class="mt-3" src="{% static 'food-icon.png' %}" width="50" height="50" class="d-inline-block align-top" alt="" loading="lazy">
+            <p class="pt-3" style="color: grey;">Добави в количката желаните ястия и напитки.</p>
+        </div>
+        <div class="col-md-4 col-sm-12 text-center">
+            <h2>Поръчай</h2>
+            <img class="mt-3" src="{% static 'delivery-icon.png' %}" width="60" height="50" class="d-inline-block align-top" alt="" loading="lazy">
+            <p class="pt-3" style="color: grey;">Плати в брой или онлайн с дебитна/кредитна карта и завърши поръчката си. Добър апетит!</p>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+        <div class="col-md-10 col-sm-12 offset-md-1 p-4 text-center">
+            <h2 class="fw-bold" style="color: orange">Защо да поръчваш храна за вкъщи, за офиса или за плажа?</h2>
+            <p class="pt-3">Защото ти се яде нещо апетитно и различно. Защото нямаш време за готвене или не умееш да готвиш. Защото си на почивка и искаш вкусната храна да пристигне при теб, докато се припичаш на слънце или се забавляваш в морето.</p>
+            <p class="pt-2">Във Foody работим с всички добри ресторанти, така че имаш пребогат избор от хубава храна. Ароматно китайско, апетитно индийско, суши, италианска пица, дюнери, скара, българска кухня, вегетариански ястия – можеш да избираш от десетки менюта и лесно да поръчаш точно това, което ти се похапва. И няма да останеш разочарован.</p>
+            <p class="pt-2">Ако поръчаш храна онлайн, можеш за нула време да осигуриш различни ястия от различни ресторанти и да зарадваш всички. На трапезата ти ще има бургери за децата, гръцки деликатеси за теб, мексиканска храна за гостите, без да прекараш в кухнята часове наред. Така че не се двоуми, а поръчай храна с Foody.</p>
         </div>
     </div>
 </div>

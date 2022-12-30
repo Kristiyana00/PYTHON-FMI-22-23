@@ -30,7 +30,7 @@ class OrderModel(models.Model):
     zip_code = models.IntegerField(blank=True, null=True)
     is_paid = models.BooleanField(default=False)
     is_shipped = models.BooleanField(default=False)
-    # restaurant = models.CharField(max_length=50, blank=True)
+    restaurant_id = models.IntegerField(default=0)
 
     def __str__(self):
         return f'Order: {self.created_on.strftime("%b %d %I: %M %p")}'
