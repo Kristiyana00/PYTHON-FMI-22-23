@@ -15,4 +15,4 @@ class Restaurant(models.Model):
 class Menu(models.Model):
     menu_name = models.CharField(max_length=50, blank=True)
     restaurant = models.OneToOneField(Restaurant, on_delete = models.CASCADE,primary_key=True,)
-    menu_items = models.ManyToManyField(MenuItem)
+    menu_items = models.ManyToManyField(MenuItem, blank=True)
