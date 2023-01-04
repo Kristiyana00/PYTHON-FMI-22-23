@@ -91,6 +91,19 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'restaurant/menu.html')
 
+    def test_user_cannot_access_restaurant_statistics_GET(self):
+        self.client.login(username='restaurant_test', password='test')
+        response = self.client.get(reverse('statistics'))
+        self.assertEqual(response.status_code, 403, u'Forbidden page. Only group members can access the page.')
+    
+    def test_user_can_access_restaurant_statistics_GET(self):
+        self.user.groups.add(self.group)
+        self.user.save()
+        self.client.login(username='restaurant_test', password='test')
+        response = self.client.get(reverse('statistics'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'restaurant/statistics.html')
+
     #Test Logout View:
     def test_logout(self):
         self.client.login(username='restaurant_test', password='test')
