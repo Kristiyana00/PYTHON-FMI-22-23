@@ -5,6 +5,7 @@ from django.utils.timezone import datetime
 from customer.models import OrderModel, MenuItem
 from restaurant.models import Restaurant, Menu
 from django.contrib.auth.models import User
+import pandas as pd
 
 
 #Меню с информация - общо поръчки за деня, обща печалба за деня, текущи поръчки, изпратени поръчки.
@@ -108,3 +109,49 @@ class RestaurantMenu(LoginRequiredMixin, UserPassesTestMixin, View):
 class Logout(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'accounts/logout/')
+
+
+class Statistics(LoginRequiredMixin, UserPassesTestMixin, View):
+    def get(self, request, *args, **kwargs):
+        today = datetime.today()
+        current_user = request.user
+        restaurant_name = Restaurant.objects.get(owner=current_user).name
+        restaurant_pk = Restaurant.objects.get(owner=current_user).pk
+
+        jan_orders = OrderModel.objects.filter(created_on__year=today.year, created_on__month= 1).filter(restaurant_id=restaurant_pk).count()
+        feb_orders = OrderModel.objects.filter(created_on__year=today.year, created_on__month= 2).filter(restaurant_id=restaurant_pk).count()
+        march_orders = OrderModel.objects.filter(created_on__year=today.year, created_on__month= 3).filter(restaurant_id=restaurant_pk).count()
+        april_orders = OrderModel.objects.filter(created_on__year=today.year, created_on__month= 4).filter(restaurant_id=restaurant_pk).count()
+        may_orders = OrderModel.objects.filter(created_on__year=today.year, created_on__month= 5).filter(restaurant_id=restaurant_pk).count()
+        june_orders = OrderModel.objects.filter(created_on__year=today.year, created_on__month= 6).filter(restaurant_id=restaurant_pk).count()
+        july_orders = OrderModel.objects.filter(created_on__year=today.year, created_on__month= 7).filter(restaurant_id=restaurant_pk).count()
+        aug_orders = OrderModel.objects.filter(created_on__year=today.year, created_on__month= 8).filter(restaurant_id=restaurant_pk).count()
+        sep_orders = OrderModel.objects.filter(created_on__year=today.year, created_on__month= 9).filter(restaurant_id=restaurant_pk).count()
+        oct_orders = OrderModel.objects.filter(created_on__year=today.year, created_on__month= 10).filter(restaurant_id=restaurant_pk).count()
+        nov_orders = OrderModel.objects.filter(created_on__year=today.year, created_on__month= 11).filter(restaurant_id=restaurant_pk).count()
+        dec_orders = OrderModel.objects.filter(created_on__year=today.year, created_on__month= 12).filter(restaurant_id=restaurant_pk).count()
+
+        orders_count_list = [jan_orders, feb_orders, march_orders, april_orders, may_orders, june_orders, july_orders, aug_orders, sep_orders, oct_orders, nov_orders, dec_orders]
+
+        context = {
+            'current_user': current_user,
+            'restaurant': restaurant_name,
+            # 'January': OrderModel.objects.filter(created_on__year=today.year, created_on__month= 1).filter(restaurant_id=restaurant_pk).count(),
+            # 'February': OrderModel.objects.filter(created_on__year=today.year, created_on__month= 2).filter(restaurant_id=restaurant_pk).count(),
+            # 'March': OrderModel.objects.filter(created_on__year=today.year, created_on__month= 3).filter(restaurant_id=restaurant_pk).count(),
+            # 'April': OrderModel.objects.filter(created_on__year=today.year, created_on__month= 4).filter(restaurant_id=restaurant_pk).count(),
+            # 'May': OrderModel.objects.filter(created_on__year=today.year, created_on__month= 5).filter(restaurant_id=restaurant_pk).count(),
+            # 'June': OrderModel.objects.filter(created_on__year=today.year, created_on__month= 6).filter(restaurant_id=restaurant_pk).count(),
+            # 'July': OrderModel.objects.filter(created_on__year=today.year, created_on__month= 7).filter(restaurant_id=restaurant_pk).count(),
+            # 'August': OrderModel.objects.filter(created_on__year=today.year, created_on__month= 8).filter(restaurant_id=restaurant_pk).count(),
+            # 'September': OrderModel.objects.filter(created_on__year=today.year, created_on__month= 9).filter(restaurant_id=restaurant_pk).count(),
+            # 'October': OrderModel.objects.filter(created_on__year=today.year, created_on__month= 10).filter(restaurant_id=restaurant_pk).count(),
+            # 'November': OrderModel.objects.filter(created_on__year=today.year, created_on__month= 11).filter(restaurant_id=restaurant_pk).count(),
+            # 'December': OrderModel.objects.filter(created_on__year=today.year, created_on__month= 12).filter(restaurant_id=restaurant_pk).count(),
+            'orders_count_list': orders_count_list
+        }
+
+        return render(request, 'restaurant/statistics.html', context)
+    
+    def test_func(self):
+        return self.request.user.groups.filter(name='Staff').exists()

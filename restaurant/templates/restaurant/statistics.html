@@ -1,0 +1,46 @@
+{% extends 'restaurant/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6 col-sm-12 text-center">
+            <h1>Статистика за общия брой поръчки</h1>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6 col-sm-12 text-center">
+            <div>
+                <canvas id="myChart"></canvas>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+            <script type="text/javascript">
+                const ctx = document.getElementById('myChart');
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        datasets: [{
+                            label: 'Брой поръчки',
+                            data: [{% for order in orders_count_list %}'{{order}}', {% endfor %}],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1
+                                }
+                            }
+                        }
+                    }
+                });
+            </script>
+        </div>
+    </div>
+</div>
+{% endblock content%}
