@@ -37,6 +37,12 @@ class TestViews(TestCase):
             #menu_items=[]
             restaurant=self.restaurant
         )
+
+        self.menu_item = MenuItem.objects.create(
+            name='Test',
+            description='Test',
+            price=9.99
+        )
     
     def tearDown(self):
         self.user.delete()
@@ -44,6 +50,7 @@ class TestViews(TestCase):
         self.restaurant.delete()
         self.order.delete()
         self.menu.delete()
+        self.menu_item.delete()
 
     #Test Dashboard View:
     def test_user_cannot_access_dashboard(self):
@@ -91,6 +98,7 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'restaurant/menu.html')
 
+    #Test Statistics View:
     def test_user_cannot_access_restaurant_statistics_GET(self):
         self.client.login(username='restaurant_test', password='test')
         response = self.client.get(reverse('statistics'))
@@ -103,6 +111,62 @@ class TestViews(TestCase):
         response = self.client.get(reverse('statistics'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'restaurant/statistics.html')
+
+    #Test EditPage View:
+    def test_user_cannot_access_restaurant_edit_page_GET(self):
+        self.client.login(username='restaurant_test', password='test')
+        response = self.client.get(reverse('edit-page'))
+        self.assertEqual(response.status_code, 403, u'Forbidden page. Only group members can access the page.')
+    
+    def test_user_can_access_restaurant_edit_page_GET(self):
+        self.user.groups.add(self.group)
+        self.user.save()
+        self.client.login(username='restaurant_test', password='test')
+        response = self.client.get(reverse('edit-page'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'restaurant/edit_page.html')
+
+    #Test AddItem View:
+    def test_user_cannot_access_restaurant_add_item_page_GET(self):
+        self.client.login(username='restaurant_test', password='test')
+        response = self.client.get(reverse('add-item'))
+        self.assertEqual(response.status_code, 403, u'Forbidden page. Only group members can access the page.')
+    
+    def test_user_can_access_restaurant_add_item_page_GET(self):
+        self.user.groups.add(self.group)
+        self.user.save()
+        self.client.login(username='restaurant_test', password='test')
+        response = self.client.get(reverse('add-item'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'restaurant/add_item.html')
+
+    #Test EditItem View:
+    def test_user_cannot_access_restaurant_edit_item_page_GET(self):
+        self.client.login(username='restaurant_test', password='test')
+        response = self.client.get(reverse('edit-info', args=[1]))
+        self.assertEqual(response.status_code, 403, u'Forbidden page. Only group members can access the page.')
+    
+    def test_user_can_access_restaurant_edit_item_page_GET(self):
+        self.user.groups.add(self.group)
+        self.user.save()
+        self.client.login(username='restaurant_test', password='test')
+        response = self.client.get(reverse('edit-info', args=[1]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'restaurant/update_item.html')
+
+    #Test DeleteItem View:
+    def test_user_cannot_access_restaurant_delete_item_page_GET(self):
+        self.client.login(username='restaurant_test', password='test')
+        response = self.client.get(reverse('delete-item', args=[1]))
+        self.assertEqual(response.status_code, 403, u'Forbidden page. Only group members can access the page.')
+    
+    def test_user_can_access_restaurant_delete_item_page_GET(self):
+        self.user.groups.add(self.group)
+        self.user.save()
+        self.client.login(username='restaurant_test', password='test')
+        response = self.client.get(reverse('delete-item', args=[1]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'restaurant/delete_item.html')
 
     #Test Logout View:
     def test_logout(self):

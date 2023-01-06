@@ -1,0 +1,43 @@
+{% extends 'restaurant/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-12 mt-3">
+            <table class="table table-hover table-stripped"
+                style="color: white; background-color: orange; text-align: center;">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Снимка</th>
+                        <th scope="col">Име</th>
+                        <th scope="col">Категория</th>
+                        <th scope="col">Описание</th>
+                        <th scope="col">Цена</th>
+                        <th scope="col">Промени</th>
+                        <th scope="col">Изтрий</th>
+                    </tr>
+                </thead>
+                <tbody style="background-color: white; color: black">
+                    {% for item in menu_items.all %}
+                    <tr>
+                        <th scope="row">{{ item.id }}</th>
+                        <td><img class="rounded" src="{{ item.image.url }}" width="75" height="50"></td>
+                        <td>{{ item.name }}</td>
+                        <td>
+                            {% for category in item.category.all %}
+                            {{ category }}
+                            {% endfor %}
+                        </td>
+                        <td>{{ item.description }}</td>
+                        <td>{{ item.price }}</td>
+                        <td><a href="{% url 'edit-info' item.pk %}"><i class="far fa-edit"></i></a></td>
+                        <td><a href="{% url 'delete-item' item.pk %}"><i class="fa fa-trash"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}
