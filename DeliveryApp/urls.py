@@ -21,7 +21,7 @@ from customer.views import Index, About, OrderMenu, OrderConfirmation,\
                            OrderPayConfirmation, GeneralMenuView, GeneralMenuSearchView,\
                            Restaurants, RestaurantSearch, CustomerRestaurantMenu,\
                            RestaurantMenuSearch, ChooseRestaurantOrder
-from restaurant.views import Logout, Dashboard, OrderDetails, RestaurantMenu, Statistics
+from restaurant.views import Logout, Dashboard, OrderDetails, RestaurantMenu, Statistics, EditPage, EditItemView, DeleteItemView, AddItemView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -42,5 +42,9 @@ urlpatterns = [
     path('restaurant/dashboard/', Dashboard.as_view(), name='dashboard'),
     path('restaurant/orders/<int:pk>/', OrderDetails.as_view(), name='order-details'),
     path('restaurant/menu/', RestaurantMenu.as_view(), name='restaurant-menu'),
-    path('restaurant/statistics/', Statistics.as_view(), name='statistics')
+    path('restaurant/statistics/', Statistics.as_view(), name='statistics'),
+    path('restaurant/edit-page', EditPage.as_view(), name='edit-page'),
+    path('restaurant/edit-page/edit-info/<int:pk>', EditItemView.as_view(), name='edit-info'),
+    path('restaurant/edit-page/delete/<int:pk>', DeleteItemView.as_view(), name='delete-item'),
+    path('restaurant/edit-page/add-item/', AddItemView.as_view(), name='add-item'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
