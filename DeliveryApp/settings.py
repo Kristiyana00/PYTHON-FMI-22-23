@@ -80,7 +80,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'cart.context_processor.cart_total_amount',
+                #'cart.context_processor.cart_total_amount',
             ],
         },
     },
@@ -155,4 +155,4 @@ LOGIN_REDIRECT_URL = 'dashboard'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-CART_SESSION_ID = 'cart'
+#CART_SESSION_ID = 'cart'
